@@ -3,7 +3,7 @@
 namespace Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use Illuminate\Support\Facades\Vite;
+// Chúng ta không cần 'use Illuminate\Support\Facades\Vite;' nữa
 
 abstract class TestCase extends BaseTestCase
 {
@@ -15,6 +15,8 @@ abstract class TestCase extends BaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        Vite::preventStubs();
+
+        // Thay thế dòng code cũ bằng dòng code này
+        $this->withoutVite(); 
     }
 }
