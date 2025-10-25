@@ -3,7 +3,7 @@
 namespace Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
-use Illuminate\Support\Facades\Vite; // <-- Thêm dòng này
+use Illuminate\Support\Facades\Vite;
 
 abstract class TestCase extends BaseTestCase
 {
@@ -15,6 +15,6 @@ abstract class TestCase extends BaseTestCase
     protected function setUp(): void
     {
         parent::setUp();
-        Vite::preventStubs(); // <-- Dòng này sẽ sửa lỗi của bạn
+        Vite::preventStubs();
     }
 }
