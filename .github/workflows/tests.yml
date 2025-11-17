@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
 
     strategy:
-      fail-fast: true
+      fail-fast: false  # QUAN TRỌNG: ĐÃ SỬA
       matrix:
         php: [8.2, 8.3, 8.4]
 
