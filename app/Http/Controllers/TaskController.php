@@ -36,7 +36,7 @@ class TaskController extends Controller
         ]);
         Task::create($data);
         return redirect()->route('tasks.index')
-        ->with('success','Create new task successfully!');
+            ->with('success','Create new task successfully!');
     }
 
     /**
@@ -44,7 +44,8 @@ class TaskController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $task = Task::findOrFail($id);
+        return view('task.show',compact('task'));
     }
 
     /**
@@ -52,15 +53,20 @@ class TaskController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        //tìm ra thằng đang edit hiện tại tìm id của nó
+         $task = Task::findOrFail($id);
+         return view('task.edit',compact('task'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(StoreTaskRequest $request, string $id)
     {
-        //
+         $task = Task::findOrFail($id);
+         $task->update($request->all());
+         return redirect()->route('tasks.index')
+             ->with('success','Update successfully!');
     }
 
     /**
@@ -68,6 +74,10 @@ class TaskController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $task = Task::findOrFail($id);
+        $task->delete();
+        
+        return redirect()->route('tasks.index')
+            ->with('success', 'Task deleted successfully!');
     }
 }
