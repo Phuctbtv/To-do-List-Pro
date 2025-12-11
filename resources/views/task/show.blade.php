@@ -1,39 +1,20 @@
 @extends('task.layout')
 
 @section('content')
-<!-- Thêm phần hiển thị thông báo -->
-@if(session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>Thành công!</strong> {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-@endif
-<div class="card shadow-sm">
-    <div class="card-header bg-white d-flex justify-content-between align-items-center">
-        <h5 class="mb-0">Danh sách công việc</h5>
-        <a href="{{ route('tasks.create') }}" class="btn btn-sm btn-primary">+ Thêm Task</a>
-    </div>
-    <div class="card-body">
-        <table class="table table-hover align-middle">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Công việc</th>
-                    <th>Hạn chót</th>
-                    <th>Trạng thái</th>
-                    <th class="text-end">Hành động</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Demo static -->
-                 @forelse($task as $task)
-                  <tr>
-                    <td>{{$task->id}}</td>
-                    <td>{{$task->title}}</td>
-                    <td>{{$task->due_date}}</td>
-                    <!-- trạng thái -->
-                    <td>
-                     @switch($task->status)
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">📄 Chi tiết công việc</h5>
+                <a href="{{ route('tasks.index') }}" class="btn btn-sm btn-secondary">⬅ Quay lại</a>
+            </div>
+            <div class="card-body">
+                <h4 class="fw-bold mb-3">{{$task->title}}</h4>
+                <p class="text-muted"><strong>Mô tả:</strong></p>
+                <p>{{$task->description ?? 'Chưa có mô tả'}}</p>
+                <p><strong>Hạn chót:</strong> <span class="badge bg-danger">{{$task->due_date}}</span></p>
+                <p><strong>Trạng thái:</strong> 
+                 @switch($task->status)
                         @case(0)
                             <span class="badge bg-primary">Chưa làm</span>
                             @break
@@ -47,13 +28,11 @@
                             <span class="badge bg-primary">Chưa làm</span>
                             @break
                      @endswitch
-                    </td>
-                    <td class="text-end">
-                        <a href="{{ route('tasks.show',$task->id) }}" class="btn btn-sm btn-info text-white">Xem</a>
-                        <a href="{{ route('tasks.edit', 1) }}" class="btn btn-sm btn-warning">Sửa</a>
-                        <!-- <button class="btn btn-sm btn-danger">Xóa</button> -->
-                         <!-- Thành: -->
-                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $task->id }}">
+                    </p>
+
+                <div class="mt-4 d-flex justify-content-end">
+                    <a href="{{ route('tasks.edit',$task->id) }}" class="btn btn-warning me-2">✏️ Sửa</a>
+                    <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ $task->id }}">
                             Xóa
                         </button>
                         <!-- Modal xác nhận xóa - thêm sau mỗi </tr> -->
@@ -79,16 +58,9 @@
                             </div>
                         </div>
                     </div>
-                    </td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="5" align="center">Hiện tại chưa có task nào</td>
-                </tr>
-                 @endforelse
-               
-            </tbody>
-        </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 @endsection
