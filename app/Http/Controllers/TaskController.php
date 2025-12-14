@@ -7,6 +7,7 @@ use App\Models\Task;
 use App\Http\Requests\StoreTaskRequest; 
 use Illuminate\Support\Facades\Auth;
 
+
 class TaskController extends Controller
 {
     /**
@@ -14,7 +15,18 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $task =Task::all();
+        // $task =Task::all();// lấy tất cả dữ liệu bản ghi của bảng Task
+        // $task =Task::paginate(10);//  mỗi trang có 10 bản ghi của bảng Task
+        // Sắp xếp theo created_at (mặc định Laravel có created_at)
+        $task = Task::with('user')->orderBy('due_date')
+                    ->paginate(10);
+        // Lấy 10 task từ database
+
+        // Tải luôn user liên quan (không bị lỗi N+1 query)
+
+        // Sắp xếp theo due_date (hạn chót)
+
+        // Phân trang (chia thành các trang)
         return view('task.index',compact('task'));
     }
 
